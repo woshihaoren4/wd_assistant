@@ -1,0 +1,14 @@
+[workspace]
+members = ["webui"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+authors = ["Teshin <1443965173@qq.com>"]
+repository = "https://github.com/woshihaoren4/wd_assistant"
+keywords = ["ai","assistant","wd_assistant"]
+description = "a ai assistant"
+license = "MIT"
+readme = "README.md"
+
+[workspace.dependencies]
