@@ -1,3 +1,4 @@
+pub(crate) mod const_config;
 mod memory_config;
 
 pub use memory_config::*;

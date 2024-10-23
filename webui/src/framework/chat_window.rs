@@ -1,6 +1,8 @@
+use crate::config::const_config::CHAT_WINDOW_INIT_SIZE;
 use crate::config::{Config, WindowMode};
 use eframe::egui::{
-    CentralPanel, CollapsingHeader, Context, SidePanel, TopBottomPanel, Vec2, ViewportCommand,
+    CentralPanel, CollapsingHeader, Context, Pos2, Rect, SidePanel, TopBottomPanel, Vec2,
+    ViewportCommand,
 };
 use eframe::Frame;
 
@@ -9,8 +11,14 @@ pub struct ChatWindow {}
 
 impl super::Window for ChatWindow {
     fn init(&mut self, ctx: &Context, _cfg: &mut Config) {
+        let mut pos = ctx.viewport(|v| v.input.raw.viewport().outer_rect.unwrap_or(Rect::ZERO).max);
+        pos.x -= CHAT_WINDOW_INIT_SIZE.0;
+        pos.y -= ctx.screen_rect().height();
+        ctx.send_viewport_cmd(ViewportCommand::OuterPosition(pos));
         ctx.send_viewport_cmd(ViewportCommand::Resizable(true));
-        ctx.send_viewport_cmd(ViewportCommand::InnerSize(Vec2::new(800.0, 600.0)));
+        ctx.send_viewport_cmd(ViewportCommand::InnerSize(Vec2::from(
+            CHAT_WINDOW_INIT_SIZE,
+        )));
         ctx.send_viewport_cmd(ViewportCommand::Decorations(true));
         // ctx.send_viewport_cmd(ViewportCommand::Transparent(false));
     }

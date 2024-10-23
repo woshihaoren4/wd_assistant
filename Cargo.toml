@@ -1,5 +1,5 @@
 [workspace]
-members = ["webui"]
+members = [ "agent","webui"]
 resolver = "2"
 
 [workspace.package]
@@ -12,3 +12,13 @@ license = "MIT"
 readme = "README.md"
 
 [workspace.dependencies]
+wd_tools = {version = "0.13.14", features = ["default"]}
+wd_log = "0.4.0"
+async-trait = "0.1.83"
+serde = {version = "1.0.210",features = ["derive"]}
+serde_json = {version = "1.0.128" }
+anyhow = "1.0.89"
+async-channel = "2.3.1"
+reqwest = "0.12.8"
+tokio = {version = "1.40.0"}
+wd_macro = "0.4.1"
