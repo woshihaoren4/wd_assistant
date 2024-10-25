@@ -6,6 +6,8 @@ use wd_tools::sync::Am;
 mod agent;
 mod builder;
 
+pub use agent::*;
+
 #[derive(Debug, Clone)]
 pub struct ChatRespStream {
     chan: Arc<Am<VecDeque<anyhow::Result<String>>>>,

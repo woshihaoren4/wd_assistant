@@ -9,11 +9,11 @@ use wd_tools::sync::Am;
 pub struct SingleAgent {
     //1:可用 2:回复中 3:终止回复
     status: Arc<AtomicI8>,
-    prompt: String,
-    model_config: ModelConfig,
-    model: Box<dyn Model + Sync>,
-    history: Arc<Am<VecDeque<Message>>>,
-    max_history: usize,
+    pub prompt: String,
+    pub model_config: ModelConfig,
+    pub model: Box<dyn Model + Sync>,
+    pub history: Arc<Am<VecDeque<Message>>>,
+    pub max_history: usize,
 }
 impl SingleAgent {
     pub fn new<M:Model+Sync+'static>(model:M)->Self{
@@ -43,6 +43,9 @@ impl SingleAgent {
     }
     pub fn status_is_usable(&self)->bool{
         self.status.load(Ordering::Relaxed) == 1
+    }
+    pub fn get_status(&self)->i8{
+        self.status.load(Ordering::Relaxed)
     }
 }
 struct ChatHistoryWatch {
@@ -161,7 +164,7 @@ mod test{
     use crate::agent::agent::SingleAgent;
     use crate::model::qwen::QwenModel;
 
-    // cargo test --lib agent::agent::test::test_single_agent -- --nocapture
+    // cargo test --lib pkg::pkg::test::test_single_agent -- --nocapture
     #[tokio::test]
     async fn test_single_agent(){
         let agent = SingleAgent::new(QwenModel::default())
@@ -177,7 +180,7 @@ mod test{
             if buf.is_empty() {
                 continue
             }
-            let answer = agent.chat(buf.clone()).await.expect("agent chat error:");
+            let answer = agent.chat(buf.clone()).await.expect("pkg chat error:");
             buf = String::new();
             print!("ASSISTANT: ");
             std::io::stdout().flush().unwrap();

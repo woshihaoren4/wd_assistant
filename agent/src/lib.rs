@@ -1,3 +1,7 @@
-mod agent;
+pub mod agent;
 pub mod model;
-mod utils;
+pub mod utils;
+
+
+pub use agent::*;
+pub use model::*;

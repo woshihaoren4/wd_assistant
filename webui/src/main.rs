@@ -1,10 +1,11 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-mod agent;
 mod config;
 mod framework;
+mod pkg;
 
 use crate::config::const_config::CHAT_WINDOW_INIT_SIZE;
+use crate::framework::WdApp;
 use eframe::egui;
 
 fn main() -> eframe::Result {
@@ -22,7 +23,7 @@ fn main() -> eframe::Result {
         options,
         Box::new(|cc| {
             egui_extras::install_image_loaders(&cc.egui_ctx);
-            Ok(Box::<framework::WdApp>::default())
+            Ok(Box::new(WdApp::new(cc)))
         }),
     )
 }

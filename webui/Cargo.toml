@@ -10,5 +10,12 @@ license.workspace = true
 readme.workspace = true
 
 [dependencies]
+tokio = {workspace = true,features = ["rt-multi-thread"]}
+anyhow.workspace = true
+wd_macro.workspace = true
+wd_tools = { workspace = true,features = ["point-free","sync"]}
+wd_log.workspace = true
+
 eframe = {version = "0.29",features = ["default"]}
 egui_extras = { version = "0.29", features = ["default", "all_loaders"] }
+agent = {version = "0.1",path = "../agent"}

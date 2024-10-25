@@ -7,7 +7,7 @@ use crate::framework::adsorb_window::AdsorbWindow;
 use crate::framework::chat_window::ChatWindow;
 use crate::framework::floating_window::FloatingWindow;
 use eframe::egui::Context;
-use eframe::{egui, App, Frame};
+use eframe::{egui, App, CreationContext, Frame};
 
 pub trait Window {
     fn init(&mut self, ctx: &egui::Context, cfg: &mut Config) {}
@@ -19,6 +19,30 @@ pub struct WdApp {
     pub chat_window: Box<dyn Window>,
     pub floating_window: Box<dyn Window>,
     pub adsorb: Box<dyn Window>,
+}
+impl WdApp {
+    pub fn new(cc: &CreationContext) -> Self {
+        WdApp::setup_custom_fonts(&cc.egui_ctx);
+        Self::default()
+    }
+    pub fn setup_custom_fonts(ctx: &egui::Context) {
+        let mut fonts = egui::FontDefinitions::default();
+        fonts.font_data.insert(
+            "my_font".to_owned(),
+            egui::FontData::from_static(include_bytes!("../../resource/aashigemingxinpian.ttf")),
+        );
+        fonts
+            .families
+            .entry(egui::FontFamily::Proportional)
+            .or_default()
+            .insert(0, "my_font".to_owned());
+        fonts
+            .families
+            .entry(egui::FontFamily::Monospace)
+            .or_default()
+            .push("my_font".to_owned());
+        ctx.set_fonts(fonts);
+    }
 }
 
 impl Default for WdApp {
